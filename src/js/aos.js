@@ -7,8 +7,8 @@
 import styles from './../sass/aos.scss';
 
 // Modules & helpers
-import throttle from 'lodash.throttle';
-import debounce from 'lodash.debounce';
+import {throttle} from 'lodash-es';
+import {debounce} from 'lodash-es';
 
 import observer from './libs/observer';
 

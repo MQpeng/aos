@@ -3,3 +3,4 @@ test
 node_modules
 cypress
 .babelrc
+babel.config.json

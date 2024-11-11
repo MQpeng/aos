@@ -74,8 +74,6 @@ const applyClasses = (el, top) => {
   }
 };
 
-inter
-
 /**
  * Scroll logic - add or remove 'aos-animate' class on scroll
  *
