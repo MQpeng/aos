@@ -12,6 +12,10 @@
 For last stable release (v2) go [here](https://github.com/michalsnik/aos/tree/v2)
 
 ---
+## New Feature
+- [x] **settings.root** - support change scrollable root element
+
+
 ### 🚀 [Demo](http://michalsnik.github.io/aos/)
 
 ### 🌟 Codepen Examples

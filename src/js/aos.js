@@ -13,7 +13,7 @@ import debounce from 'lodash.debounce';
 import observer from './libs/observer';
 
 import detect from './helpers/detector';
-import handleScroll from './helpers/handleScroll';
+import {handleScrollWithRoot} from './helpers/handleScroll';
 import prepare from './helpers/prepare';
 import elements from './helpers/elements';
 
@@ -41,7 +41,9 @@ let options = {
   useClassNames: false,
   disableMutationObserver: false,
   throttleDelay: 99,
-  debounceDelay: 50
+  debounceDelay: 50,
+  // Html Element
+  root: window,
 };
 
 // Detect not supported browsers (<=IE9)
@@ -52,15 +54,15 @@ const initializeScroll = function initializeScroll() {
   // Extend elements objects in $aosElements with their positions
   $aosElements = prepare($aosElements, options);
   // Perform scroll event, to refresh view and show/hide elements
-  handleScroll($aosElements);
+  handleScrollWithRoot($aosElements, options.root);
 
   /**
    * Handle scroll event to animate elements on scroll
    */
-  window.addEventListener(
+  options.root.addEventListener(
     'scroll',
     throttle(() => {
-      handleScroll($aosElements, options.once);
+      handleScrollWithRoot($aosElements, options.root);
     }, options.throttleDelay)
   );
 

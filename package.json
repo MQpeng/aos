@@ -1,5 +1,5 @@
 {
-  "name": "aos",
+  "name": "@tonyer/aos",
   "version": "3.0.0-beta.6",
   "description": "Animate on scroll library",
   "homepage": "https://michalsnik.github.io/aos/",
@@ -10,10 +10,10 @@
   "browser": "dist/aos.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/michalsnik/aos.git"
+    "url": "https://github.com/MQpeng/aos.git"
   },
   "bugs": {
-    "url": "https://github.com/michalsnik/aos/issues"
+    "url": "https://github.com/MQpeng/aos.git"
   },
   "devDependencies": {
     "autoprefixer": "^8.4.1",
@@ -50,7 +50,8 @@
     "test": "yarn lint && NODE_ENV=test node ./scripts/run-cypress-tests.js",
     "test:dev": "cypress open",
     "lint": "eslint src cypress demo scripts",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "ci": "npm install && npm run build"
   },
   "files": [
     "dist",
