@@ -8,15 +8,17 @@
  * @return {Integer} [Final offset that will be used to trigger animation in good position]
  */
 
-import getOffset from './../libs/offset';
-import getInlineOption from './getInlineOption';
+import { offsetIn } from "./../libs/offset";
+import getInlineOption from "./getInlineOption";
 
-export const getPositionIn = (el, defaultOffset, defaultAnchorPlacement) => {
-  const windowHeight = window.innerHeight;
-  const anchor = getInlineOption(el, 'anchor');
-  const inlineAnchorPlacement = getInlineOption(el, 'anchor-placement');
+export const getPositionIn = (el, options) => {
+  const defaultOffset = options.offset;
+  const defaultAnchorPlacement = options.anchorPlacement;
+  const windowHeight = options.root.clientHeight || window.innerHeight;
+  const anchor = getInlineOption(el, "anchor");
+  const inlineAnchorPlacement = getInlineOption(el, "anchor-placement");
   const additionalOffset = Number(
-    getInlineOption(el, 'offset', inlineAnchorPlacement ? 0 : defaultOffset)
+    getInlineOption(el, "offset", inlineAnchorPlacement ? 0 : defaultOffset)
   );
   const anchorPlacement = inlineAnchorPlacement || defaultAnchorPlacement;
   let finalEl = el;
@@ -25,34 +27,34 @@ export const getPositionIn = (el, defaultOffset, defaultAnchorPlacement) => {
     finalEl = document.querySelectorAll(anchor)[0];
   }
 
-  let triggerPoint = getOffset(finalEl).top - windowHeight;
+  let triggerPoint = offsetIn(finalEl, options.root).top - windowHeight;
 
   switch (anchorPlacement) {
-    case 'top-bottom':
+    case "top-bottom":
       // Default offset
       break;
-    case 'center-bottom':
+    case "center-bottom":
       triggerPoint += finalEl.offsetHeight / 2;
       break;
-    case 'bottom-bottom':
+    case "bottom-bottom":
       triggerPoint += finalEl.offsetHeight;
       break;
-    case 'top-center':
+    case "top-center":
       triggerPoint += windowHeight / 2;
       break;
-    case 'center-center':
+    case "center-center":
       triggerPoint += windowHeight / 2 + finalEl.offsetHeight / 2;
       break;
-    case 'bottom-center':
+    case "bottom-center":
       triggerPoint += windowHeight / 2 + finalEl.offsetHeight;
       break;
-    case 'top-top':
+    case "top-top":
       triggerPoint += windowHeight;
       break;
-    case 'bottom-top':
+    case "bottom-top":
       triggerPoint += windowHeight + finalEl.offsetHeight;
       break;
-    case 'center-top':
+    case "center-top":
       triggerPoint += windowHeight + finalEl.offsetHeight / 2;
       break;
   }
@@ -60,17 +62,18 @@ export const getPositionIn = (el, defaultOffset, defaultAnchorPlacement) => {
   return triggerPoint + additionalOffset;
 };
 
-export const getPositionOut = (el, defaultOffset) => {
+export const getPositionOut = (el, options) => {
+  const defaultOffset = options.offset;
   const windowHeight = window.innerHeight;
-  const anchor = getInlineOption(el, 'anchor');
-  const additionalOffset = getInlineOption(el, 'offset', defaultOffset);
+  const anchor = getInlineOption(el, "anchor");
+  const additionalOffset = getInlineOption(el, "offset", defaultOffset);
   let finalEl = el;
 
   if (anchor && document.querySelectorAll(anchor)) {
     finalEl = document.querySelectorAll(anchor)[0];
   }
 
-  const elementOffsetTop = getOffset(finalEl).top;
+  const elementOffsetTop = offsetIn(finalEl, options.root).top;
 
   return elementOffsetTop + finalEl.offsetHeight - additionalOffset;
 };

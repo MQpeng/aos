@@ -1,4 +1,4 @@
-import detect from './detector';
+import detect from "./detector";
 
 /**
  * Adds multiple classes on node
@@ -6,7 +6,7 @@ import detect from './detector';
  * @param {array}  classes
  */
 const addClasses = (node, classes) =>
-  classes && classes.forEach(className => node.classList.add(className));
+  classes && classes.forEach((className) => node.classList.add(className));
 
 /**
  * Removes multiple classes from node
@@ -14,17 +14,17 @@ const addClasses = (node, classes) =>
  * @param {array}  classes
  */
 const removeClasses = (node, classes) =>
-  classes && classes.forEach(className => node.classList.remove(className));
+  classes && classes.forEach((className) => node.classList.remove(className));
 
 const fireEvent = (eventName, data) => {
   let customEvent;
 
   if (detect.ie11()) {
-    customEvent = document.createEvent('CustomEvent');
+    customEvent = document.createEvent("CustomEvent");
     customEvent.initCustomEvent(eventName, true, true, { detail: data });
   } else {
     customEvent = new CustomEvent(eventName, {
-      detail: data
+      detail: data,
     });
   }
 
@@ -43,7 +43,7 @@ const applyClasses = (el, top) => {
     if (!el.animated) return;
 
     removeClasses(node, options.animatedClassNames);
-    fireEvent('aos:out', node);
+    fireEvent("aos:out", node);
 
     if (el.options.id) {
       fireEvent(`aos:in:${el.options.id}`, node);
@@ -57,7 +57,7 @@ const applyClasses = (el, top) => {
 
     addClasses(node, options.animatedClassNames);
 
-    fireEvent('aos:in', node);
+    fireEvent("aos:in", node);
     if (el.options.id) {
       fireEvent(`aos:in:${el.options.id}`, node);
     }
@@ -80,13 +80,12 @@ const applyClasses = (el, top) => {
  * @param  {array} $elements         array of elements nodes
  * @return {void}
  */
-export const handleScroll = $elements =>
+export const handleScroll = ($elements) =>
   $elements.forEach((el, i) => applyClasses(el, window.pageYOffset));
 
-
 export const handleScrollWithRoot = ($elements, root = window) => {
-  const scrollTop = root.scrollTop || root.pageYOffset;
+  const scrollTop = root.scrollTop || window.scrollY || window.pageYOffset;
   $elements.forEach((el, i) => applyClasses(el, scrollTop));
-}
+};
 
 export default handleScroll;
